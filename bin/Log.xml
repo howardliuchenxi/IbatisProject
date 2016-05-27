@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Log">
+
+  <!--statements-->
+
+   <typeAlias alias="LogType" type="model.Log"/>
+
+
+
+    <select id="SelectLogAll" resultClass="LogType">
+      select
+      *
+      from Personlog
+    </select> 
+
+	 <select id="SelectLog" parameterClass="java.lang.String" resultClass="LogType">
+      select
+      id,
+      dt,
+	  msg
+      from Personlog
+	  where id=#id#
+    </select>
+
+    <select id="SelectLogFuzzy" parameterClass="java.lang.String" resultClass="LogType">
+      select
+       id,
+      dt,
+	  msg
+      from Personlog
+	  where id like '%$id$%'
+    </select>
+
+	 <insert id="insertLog" parameterClass="LogType" >
+      insert into PersonLog
+      values
+	  (#id#,to_date(#dt#,'yyyy-mm-dd'), #msg#)
+    </insert>
+
+
+	 <delete id="DeleteLog" parameterClass="java.lang.String" >
+      delete from PersonLog
+	  where 
+	  id=#iddel#
+    </delete>
+
+	 <update id="UpdateLog" parameterClass="LogType">
+      update 
+	  set
+      dt=todate('yyyy-mm-dd',#dt#),
+	  msg=#msg#
+	  where id=#id#
+    </update>
+
+  <!--/statements-->
+
+</sqlMap>

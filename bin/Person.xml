@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Person">
+
+  <!--statements-->
+
+   <typeAlias alias="PersonType" type="model.Person"/>
+
+
+
+    <select id="SelectPersonAll" resultClass="PersonType">
+      select
+      id,
+      name,
+      score
+      from Person
+    </select> 
+
+<select id="SelectPerson" parameterClass="java.lang.String" resultClass="PersonType">
+      select
+      id,
+      name,
+	  score
+      from Person
+	  where id=#id#
+    </select>
+
+    <select id="SelectPersonFuzzy" parameterClass="java.lang.String" resultClass="PersonType">
+      select
+      id,
+      name,
+	  score
+      from Person
+	  where id like '%$id$%'
+    </select>
+
+	 <insert id="insertPerson" parameterClass="PersonType" >
+      insert into Person
+      values
+	  (#id#, #name#, #score#)
+    </insert>
+
+
+	 <delete id="DeletePerson" parameterClass="java.lang.String" >
+      delete from Person
+	  where 
+	  id=#iddel#
+    </delete>
+
+	 <update id="UpdatePerson" parameterClass="PersonType">
+      update Person
+	  set
+      name=#name#,
+	  score=#score#
+	  where id=#id#
+    </update>
+
+  <!--/statements-->
+
+</sqlMap>
